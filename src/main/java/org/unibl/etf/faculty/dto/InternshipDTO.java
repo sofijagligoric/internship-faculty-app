@@ -10,35 +10,47 @@ public class InternshipDTO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -7009041025263713329L;
-	private Integer id;
-    private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Boolean available;
-    private String about;
-    private String technologies;
-    private String skills;
-    private Integer companyId;
-    private String requirements;
+	 private Integer id;
+	    private String name;
+	    private LocalDate startDate;
+	    private LocalDate endDate;
+	    private String about;
+	    private String technologies;
+	    private String skills;
+	    private Integer companyId;
+	    private String requirements;
+	    private String companyName;
     
+	public InternshipDTO(Integer id, String name, LocalDate startDate, LocalDate endDate, String about,
+				String technologies, String skills, Integer companyId, String requirements, String companyName) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.startDate = startDate;
+			this.endDate = endDate;
+			this.about = about;
+			this.technologies = technologies;
+			this.skills = skills;
+			this.companyId = companyId;
+			this.requirements = requirements;
+			this.companyName = companyName;
+		}
+
 	public InternshipDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InternshipDTO(Integer id, String name, LocalDate startDate, LocalDate endDate, Boolean available,
-			String about, String technologies, String skills, Integer companyId, String requirements) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.available = available;
-		this.about = about;
-		this.technologies = technologies;
-		this.skills = skills;
-		this.companyId = companyId;
-		this.requirements = requirements;
+	
+	
+
+	public String getCompanyName() {
+		return companyName;
 	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -63,12 +75,7 @@ public class InternshipDTO implements Serializable{
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
-	public Boolean getAvailable() {
-		return available;
-	}
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
+
 	public String getAbout() {
 		return about;
 	}
@@ -101,7 +108,7 @@ public class InternshipDTO implements Serializable{
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(available, companyId, id, name);
+		return Objects.hash(companyId, id, name);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -112,7 +119,7 @@ public class InternshipDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		InternshipDTO other = (InternshipDTO) obj;
-		return Objects.equals(available, other.available) && Objects.equals(companyId, other.companyId)
+		return Objects.equals(companyId, other.companyId)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
     

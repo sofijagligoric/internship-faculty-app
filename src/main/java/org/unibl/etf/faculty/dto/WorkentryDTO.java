@@ -12,22 +12,55 @@ public class WorkentryDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = -1115263753017795739L;
 	private Integer id;
-	    private String activity;
-	    private LocalDate weekStart;
-	    private Integer internshipId;
-	    private Integer studentId;
+    private String activity;
+    private LocalDate weekStart;
+    private Integer internshipId;
+    private Integer studentId;
+    private String studentFirstName;
+    private String studentLastName;
+    private String internshipName;
 		public WorkentryDTO() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
-		public WorkentryDTO(Integer id, String activity, LocalDate weekStart, Integer internshipId, Integer studentId) {
+		
+		public WorkentryDTO(Integer id, String activity, LocalDate weekStart, Integer internshipId, Integer studentId,
+				String studentFirstName, String studentLastName, String internshipName) {
 			super();
 			this.id = id;
 			this.activity = activity;
 			this.weekStart = weekStart;
 			this.internshipId = internshipId;
 			this.studentId = studentId;
+			this.studentFirstName = studentFirstName;
+			this.studentLastName = studentLastName;
+			this.internshipName = internshipName;
 		}
+
+		public String getStudentFirstName() {
+			return studentFirstName;
+		}
+
+		public void setStudentFirstName(String studentFirstName) {
+			this.studentFirstName = studentFirstName;
+		}
+
+		public String getStudentLastName() {
+			return studentLastName;
+		}
+
+		public void setStudentLastName(String studentLastName) {
+			this.studentLastName = studentLastName;
+		}
+
+		public String getInternshipName() {
+			return internshipName;
+		}
+
+		public void setInternshipName(String internshipName) {
+			this.internshipName = internshipName;
+		}
+
 		public Integer getId() {
 			return id;
 		}

@@ -39,3 +39,102 @@
 .action-buttons button{
 	margin-top:0;
 }
+
+
+.create-comp-button-div {
+	width: 100%;
+	margin-bottom: 20px;
+	align-items: center;
+	justify-content: space-between;
+}
+.create-comp-button-div h2 {
+	color: #051642;
+}
+
+
+.main-new-company-div {
+	display: flex;
+	justify-content: center;
+	padding: 40px;
+	background: #f5f7fa;
+	align-items: center;
+}
+.new-comp-header {
+	color: #051642;
+	text-align: center;
+}
+
+.new-company-card {
+	width: 90%;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	padding: 30px;
+}
+
+.submit-button {
+	width: 150px;
+	align-self: flex-end;
+	margin-top: 15px;
+}
+
+.company-form {
+	align-items: flex-start;
+	justify-content: center;
+	gap: 15px;
+	padding: 30px;
+}
+
+.company-form input[type="text"], input[type="email"] {
+	max-width: 100% !important;
+}
+
+.company-form input[type="radio"] {
+	max-width: 20px !important;
+}
+.create-company-input-div {
+	gap: 5px;
+	width: 100%;
+}
+
+.create-company-radio-div {
+	gap: 5px;
+	align-items: center;
+	justify-content: center;
+	width: 60px;
+}
+
+.create-company-radio {
+	gap: 5px;
+	width: 100%;
+	align-items: center;
+}
+
+.input-group {
+	margin-bottom: 15px;
+	display: flex;
+	flex-direction: column;
+}
+
+.input-group label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+@media ( max-width : 750px) {
+	.company-form {
+		padding: 0;
+	}
+	.submit-button {
+		align-self: center;
+	}
+	.main-new-company-div {
+		padding: 10px;
+	}
+	
+	.new-comp-header {
+	font-size: 1.2rem;
+	margin-bottom: 25px;
+}
+.create-comp-button-div {
+	justify-content: center;
+}
+}

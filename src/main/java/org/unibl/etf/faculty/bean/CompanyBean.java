@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.unibl.etf.faculty.dto.CompanyDTO;
+import org.unibl.etf.faculty.dto.CreateCompanyDTO;
 import org.unibl.etf.faculty.service.BackendService;
 
 
@@ -22,7 +23,7 @@ public class CompanyBean implements Serializable {
 		return BackendService.get("/company/" + companyId, CompanyDTO.class);
 	}
 	
-	public boolean createCompany(CompanyDTO dto) {
+	public boolean createCompany(CreateCompanyDTO dto) {
 		CompanyDTO result = BackendService.post("/company", dto, CompanyDTO.class);
 		if (result != null) {
 			return true;

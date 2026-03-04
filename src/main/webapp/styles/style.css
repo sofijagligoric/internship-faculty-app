@@ -99,12 +99,13 @@ button {
 	cursor: pointer;
 	border-radius: 20px;
 	min-width: 65px;
+	word-break: break-word;
 }
 
 .pagination-link-enabled {
 	min-width: 70px;
 	max-width: 90px;
-	height: 40px;
+	min-height: 40px;
 	background: #051642;
 	border: none;
 	padding: 8px 15px;
@@ -120,7 +121,7 @@ button {
 .pagination-link-disabled {
 	min-width: 70px;
 	max-width: 90px;
-	height: 40px;
+	min-height: 40px;
 	background: #051642;
 	border: none;
 	padding: 8px 15px;

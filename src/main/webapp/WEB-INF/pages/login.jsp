@@ -14,7 +14,7 @@
 
 	<div class="main-div column-div">
 		<%
-		if (session.getAttribute("notification") != null) {
+		if (session.getAttribute("notification") != null && !session.getAttribute("notification").toString().isEmpty()){
 		%>
 		<div class="notification error">
 			<%=session.getAttribute("notification")%>

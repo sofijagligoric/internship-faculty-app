@@ -3,76 +3,109 @@ package org.unibl.etf.faculty.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class EvaluationDTO implements Serializable{
+public class EvaluationDTO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 182906078316531422L;
 	private Integer id;
-	    private String description;
-	    private Integer studentId;
-	    private Integer internshipId;
-	    private Integer companyId;
-		public EvaluationDTO() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-		public EvaluationDTO(Integer id, String description, Integer studentId, Integer internshipId,
-				Integer companyId) {
-			super();
-			this.id = id;
-			this.description = description;
-			this.studentId = studentId;
-			this.internshipId = internshipId;
-			this.companyId = companyId;
-		}
-		public Integer getId() {
-			return id;
-		}
-		public void setId(Integer id) {
-			this.id = id;
-		}
-		public String getDescription() {
-			return description;
-		}
-		public void setDescription(String description) {
-			this.description = description;
-		}
-		public Integer getStudentId() {
-			return studentId;
-		}
-		public void setStudentId(Integer studentId) {
-			this.studentId = studentId;
-		}
-		public Integer getInternshipId() {
-			return internshipId;
-		}
-		public void setInternshipId(Integer internshipId) {
-			this.internshipId = internshipId;
-		}
-		public Integer getCompanyId() {
-			return companyId;
-		}
-		public void setCompanyId(Integer companyId) {
-			this.companyId = companyId;
-		}
-		@Override
-		public int hashCode() {
-			return Objects.hash(companyId, id, internshipId, studentId);
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			EvaluationDTO other = (EvaluationDTO) obj;
-			return Objects.equals(companyId, other.companyId) && Objects.equals(id, other.id)
-					&& Objects.equals(internshipId, other.internshipId) && Objects.equals(studentId, other.studentId);
-		}
-	    
-	    
+	private String description;
+	private Integer studentId;
+	private Integer internshipId;
+	private Integer companyId;
+	private String companyName;
+	private String internshipName;
+
+	public EvaluationDTO(Integer id, String description, Integer studentId, Integer internshipId, Integer companyId,
+			String companyName, String internshipName) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.studentId = studentId;
+		this.internshipId = internshipId;
+		this.companyId = companyId;
+		this.companyName = companyName;
+		this.internshipName = internshipName;
+	}
+
+	public EvaluationDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getInternshipName() {
+		return internshipName;
+	}
+
+	public void setInternshipName(String internshipName) {
+		this.internshipName = internshipName;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
+	}
+
+	public Integer getInternshipId() {
+		return internshipId;
+	}
+
+	public void setInternshipId(Integer internshipId) {
+		this.internshipId = internshipId;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(companyId, id, internshipId, studentId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EvaluationDTO other = (EvaluationDTO) obj;
+		return Objects.equals(companyId, other.companyId) && Objects.equals(id, other.id)
+				&& Objects.equals(internshipId, other.internshipId) && Objects.equals(studentId, other.studentId);
+	}
+
 }
