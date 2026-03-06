@@ -29,8 +29,12 @@
 		%>
 		<div class="row-div create-comp-button-div">
 			<h2 class="title-h2">Student management</h2>
-			<a href="?action=createStudent" class="pagination-link-enabled"
-				style="max-width: none;">New student</a>
+			<div class="action-buttons" style="width: auto;">
+				<button onclick="openModal()" class="apply-btn">Load from
+					file</button>
+				<a href="?action=createStudent" class="pagination-link-enabled"
+					style="max-width: none;">New student</a>
+			</div>
 		</div>
 		<div class="table-container">
 			<table>
@@ -56,12 +60,13 @@
 						<td><%=s.getEmail()%></td>
 						<td>
 							<div class="action-buttons">
-								<a href="?action=updateStudent" class="pagination-link-enabled"
+								<a href="?action=updateStudent&studentId=<%=s.getId()%>"
+									class="pagination-link-enabled"
 									style="max-width: none; background-color: #327fba;">Update</a>
-								<a href="?action=deleteStudent&studentId=<%= s.getId() %>"
+								<a href="?action=deleteStudent&studentId=<%=s.getId()%>"
 									class="pagination-link-enabled"
 									style="max-width: none; background-color: #c42a1f;"
-									onclick="return confirm('Are you sure you want to delete student: <%= s.getFirstName() %> <%= s.getLastName() %>?');">
+									onclick="return confirm('Are you sure you want to delete student: <%=s.getFirstName()%> <%=s.getLastName()%>?');">
 									Delete </a>
 							</div>
 						</td>
@@ -74,6 +79,24 @@
 			</table>
 		</div>
 	</div>
+	<div id="fileModal" class="file-modal">
+		<div class="file-modal-content column-div">
+			<h3>Load data from CSV file</h3>
+			<form method="POST" action="?action=uploadStudentsCsv"
+				enctype="multipart/form-data" class="column-div file-form">
+
+				<label>File:</label> <input type="file" name="file" accept=".csv"
+					required />
+
+				<div class="action-buttons">
+					<button type="submit" class="apply-btn">Upload</button>
+					<button type="button" class="apply-btn" onclick="closeModal()"
+						style="background-color: #c42a1f;">Cancel</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
 	<script>
     const notification = document.querySelector('.notification');
     if (notification) {
@@ -84,6 +107,13 @@
                 notification.style.display = "none";
             }, 500);
         }, 5000);
+    }
+    
+    function openModal() {
+        document.getElementById('fileModal').style.display = "block";
+    }
+    function closeModal() {
+        document.getElementById('fileModal').style.display = "none";
     }
 </script>
 </body>

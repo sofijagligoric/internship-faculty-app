@@ -1,5 +1,6 @@
 package org.unibl.etf.faculty.bean;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class StudentBean implements Serializable {
 		return BackendService.get("/student/" + studentId, StudentDTO.class);
 	}
 	
+	public CreateStudentDTO getCompleteStudentById(Integer studentId) {
+		return BackendService.get("/student/complete/" + studentId, CreateStudentDTO.class);
+	}
+	
+	
 	public boolean createStudent(CreateStudentDTO dto) {
 		StudentDTO result = BackendService.post("/student", dto, StudentDTO.class);
 		if (result != null) {
@@ -32,8 +38,7 @@ public class StudentBean implements Serializable {
 	}
 	
 	public boolean deleteStudent(Integer id) {
-		boolean deleted = BackendService.delete("/student/" + id);
-		return deleted;
+		return BackendService.delete("/student/" + id);
 	}
 	
 	public List<WorkentryDTO> getAllWorkentriesForStudent(Integer id) {
@@ -43,4 +48,14 @@ public class StudentBean implements Serializable {
 	public List<EvaluationDTO> getAllEvaluationsForStudent(Integer id) {
 		return BackendService.getList("/evaluation/student/" + id + "/all", EvaluationDTO[].class);
 	}
+	
+	public boolean updateStudent(Integer id, CreateStudentDTO dto) {
+		return BackendService.put("/student/" + id, dto); 
+	}
+
+	public boolean uploadStudentsCsv(InputStream fileStream, Integer id) {
+
+		return BackendService.uploadCsv(fileStream, "/student/csvUpload/" + id);
+	}
+
 }

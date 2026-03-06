@@ -18,44 +18,35 @@
 	<%@include file="header.jsp"%>
 
 	<div class="workentry-main column-div">
-    <%
-    String studentIdRaw = request.getParameter("studentId");
-    
-    if (studentIdRaw != null) {
-        try {
-            int id = Integer.parseInt(studentIdRaw);
-            List<EvaluationDTO> evaluations = studentBean.getAllEvaluationsForStudent(id);
-            
-            if (evaluations == null || evaluations.isEmpty()) {
-            %>
-                <p>No evaluations found for this student.</p>
-            <%
-            } else {
-            %>
-                <div class="we-cards-container">
-                    <%
-                    for (EvaluationDTO evaluation : evaluations) {
-                    %>
-                    <div class="we-card">
-                        <h3> <%=evaluation.getCompanyName()%></h3>
-                        <p><strong>Internship:</strong> <%=evaluation.getInternshipName()%></p>
-                         <p> <%=evaluation.getDescription()%></p>
-                    </div>
-                    <%
-                    }
-                    %>
-                </div>
-            <%
-            }
-        } catch (NumberFormatException e) {
-            out.println("<p>Invalid Student ID format.</p>");
-        }
-    } else {
-    %>
-        <p>Error: No student selected.</p>
-    <%
-    }
-    %>
-</div>
+		<%
+		List<EvaluationDTO> evaluations = (List<EvaluationDTO>) request.getAttribute("evaluations");
+
+		if (evaluations == null || evaluations.isEmpty()) {
+		%>
+		<p>No evaluations found for this student.</p>
+		<%
+		} else {
+		%>
+		<div class="we-cards-container">
+			<%
+			for (EvaluationDTO evaluation : evaluations) {
+			%>
+			<div class="we-card">
+				<h3>
+					<%=evaluation.getCompanyName()%></h3>
+				<p>
+					<strong>Internship:</strong>
+					<%=evaluation.getInternshipName()%></p>
+				<p>
+					<%=evaluation.getDescription()%></p>
+			</div>
+			<%
+			}
+			%>
+		</div>
+		<%
+		}
+		%>
+	</div>
 </body>
 </html>

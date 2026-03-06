@@ -10,7 +10,6 @@
 	margin-bottom: 1rem;
 }
 
-
 @media ( max-width : 768px) {
 	.pagination-container {
 		flex-direction: column;
@@ -27,7 +26,7 @@
 	margin-bottom: 20px;
 }
 
-.action-buttons{
+.action-buttons {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
@@ -36,10 +35,9 @@
 	width: 100%;
 }
 
-.action-buttons button{
-	margin-top:0;
+.action-buttons button {
+	margin-top: 0;
 }
-
 
 .create-comp-button-div {
 	width: 100%;
@@ -47,10 +45,10 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
 .create-comp-button-div h2 {
 	color: #051642;
 }
-
 
 .main-new-company-div {
 	display: flex;
@@ -59,6 +57,7 @@
 	background: #f5f7fa;
 	align-items: center;
 }
+
 .new-comp-header {
 	color: #051642;
 	text-align: center;
@@ -90,6 +89,7 @@
 .company-form input[type="radio"] {
 	max-width: 20px !important;
 }
+
 .create-company-input-div {
 	gap: 5px;
 	width: 100%;
@@ -119,6 +119,29 @@
 	margin-bottom: 5px;
 }
 
+.file-modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	align-items: center;
+}
+
+.file-modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 40px;
+	border: 1px solid #888;
+	width: 40%;
+	border-radius: 8px;
+	justify-content: center;
+	text-align: center;
+}
+
 @media ( max-width : 750px) {
 	.company-form {
 		padding: 0;
@@ -129,12 +152,20 @@
 	.main-new-company-div {
 		padding: 10px;
 	}
-	
 	.new-comp-header {
-	font-size: 1.2rem;
-	margin-bottom: 25px;
+		font-size: 1.2rem;
+		margin-bottom: 25px;
+	}
+	.create-comp-button-div {
+		justify-content: center;
+	}
+	.file-modal-content {
+		width: 80%;
+		padding: 20px;
+	}
 }
-.create-comp-button-div {
-	justify-content: center;
-}
+
+.file-form {
+	gap: 10px;
+	align-items: flex-start;
 }

@@ -6,6 +6,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +28,8 @@ public class BackendService {
 
     public static <T> List<T> getList(String endpoint, Class<T[]> responseArrayType) {
         try {
-            T[] array = client.target(BASE_URL).path(endpoint)
+        	String fullUrl = BASE_URL + endpoint; 
+            T[] array = client.target(fullUrl) 
                     .request(MediaType.APPLICATION_JSON)
                     .get(responseArrayType);
             return array != null ? Arrays.asList(array) : List.of();
@@ -111,5 +114,22 @@ public class BackendService {
             return false;
         }
     }
+    
+    public static boolean uploadCsv(InputStream fileStream, String endpoint) {
+        try {
+        	  Response response = client
+                      .target(BASE_URL)
+                      .path(endpoint)
+                      .request()
+                      .post(Entity.entity(fileStream, MediaType.APPLICATION_OCTET_STREAM));
+            boolean isSuccessful = response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL;
+            response.close(); 
+            return isSuccessful;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

@@ -19,45 +19,35 @@
 	<%@include file="header.jsp"%>
 
 	<div class="workentry-main column-div">
-    <%
-    String studentIdRaw = request.getParameter("studentId");
-    
-    if (studentIdRaw != null) {
-        try {
-            int id = Integer.parseInt(studentIdRaw);
-            List<WorkentryDTO> entries = studentBean.getAllWorkentriesForStudent(id);
+		<%
+            List<WorkentryDTO> entries = (List<WorkentryDTO>) request.getAttribute("workEntries");
             
             if (entries == null || entries.isEmpty()) {
-            %>
-                <p>No entries found for this student.</p>
-            <%
+        %>
+		<p>No entries found for this student.</p>
+		<%
             } else {
             %>
-                <div class="we-cards-container">
-                    <%
+		<div class="we-cards-container">
+			<%
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
                     for (WorkentryDTO entry : entries) {
                     %>
-                    <div class="we-card">
-                        <h3> <%=entry.getInternshipName()%></h3>
-                        <p><strong>Week start:</strong> <%=entry.getWeekStart() != null ? entry.getWeekStart().format(formatter) : "/"%></p>
-                        <p><%=entry.getActivity()%></p>
-                    </div>
-                    <%
+			<div class="we-card">
+				<h3>
+					<%=entry.getInternshipName()%></h3>
+				<p>
+					<strong>Week start:</strong>
+					<%=entry.getWeekStart() != null ? entry.getWeekStart().format(formatter) : "/"%></p>
+				<p><%=entry.getActivity()%></p>
+			</div>
+			<%
                     }
                     %>
-                </div>
-            <%
+		</div>
+		<%
             }
-        } catch (NumberFormatException e) {
-            out.println("<p>Invalid Student ID format.</p>");
-        }
-    } else {
     %>
-        <p>Error: No student selected.</p>
-    <%
-    }
-    %>
-</div>
+	</div>
 </body>
 </html>

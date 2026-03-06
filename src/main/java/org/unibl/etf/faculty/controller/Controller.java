@@ -1,26 +1,35 @@
 package org.unibl.etf.faculty.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.unibl.etf.faculty.bean.CompanyBean;
+import org.unibl.etf.faculty.bean.GradeBean;
 import org.unibl.etf.faculty.bean.InternshipBean;
 import org.unibl.etf.faculty.bean.StudentBean;
 import org.unibl.etf.faculty.bean.UserBean;
 import org.unibl.etf.faculty.dto.CreateCompanyDTO;
 import org.unibl.etf.faculty.dto.CreateStudentDTO;
+import org.unibl.etf.faculty.dto.EvaluationDTO;
+import org.unibl.etf.faculty.dto.GradeDTO;
+import org.unibl.etf.faculty.dto.WorkentryDTO;
 
 /**
  * Servlet implementation class Controller
  */
 @WebServlet("/Controller")
+@MultipartConfig
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,6 +64,8 @@ public class Controller extends HttpServlet {
 				session.setAttribute("internshipBean", internshipBean);
 				StudentBean studentBean = new StudentBean();
 				session.setAttribute("studentBean", studentBean);
+				GradeBean gradeBean = new GradeBean();
+				session.setAttribute("gradeBean", gradeBean);
 				address = "/WEB-INF/pages/companies.jsp";
 			} else {
 				session.setAttribute("notification", "Wrong username or password.");
@@ -66,77 +77,197 @@ public class Controller extends HttpServlet {
 			} else {
 				if (action.equals("companies")) {
 					address = "/WEB-INF/pages/companies.jsp";
-				}else if (action.equals("internships")) {
+				} else if (action.equals("internships")) {
 					address = "/WEB-INF/pages/internships.jsp";
-				}  
-				else if (action.equals("students")) {
+				} else if (action.equals("students")) {
 					address = "/WEB-INF/pages/students.jsp";
-				} 
-				else if (action.equals("studentWorkentries")) {
-				    if (request.getParameter("studentId") == null) {
+				} else if (action.equals("studentWorkentries")) {
+					String studentIdRaw = request.getParameter("studentId");
+				    if (studentIdRaw == null) {
 				        address = "/WEB-INF/pages/students.jsp";
 				    } else {
-				        address = "/WEB-INF/pages/student_workentries.jsp";
-				    }
-				}
-				else if (action.equals("studentEvaluations")) {
-				    if (request.getParameter("studentId") == null) {
-				        address = "/WEB-INF/pages/students.jsp";
-				    } else {
-				        address = "/WEB-INF/pages/student_evaluations.jsp";
-				    }
-				}
-				else if (action.equals("studentGrade")) {
-				    if (request.getParameter("studentId") == null) {
-				        address = "/WEB-INF/pages/students.jsp";
-				    } else {
-				        address = "/WEB-INF/pages/student_grade.jsp";
-				    }
-				}
-				else if (action.equals("studentsMonitoring")) {
-					address = "/WEB-INF/pages/student_monitoring.jsp";
-				} 
-				else if (action.equals("deleteStudent")) {
-					address = "/WEB-INF/pages/students.jsp";
-				    StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
-				    if (request.getParameter("studentId") != null && studentBean != null) {
-				    	Integer sId = Integer.parseInt(request.getParameter("studentId"));
-				        if (studentBean.deleteStudent(sId)) {
-				            session.setAttribute("notification", "Student successfully deleted.");
-				            session.setAttribute("successStatus", "success");
-				        } else {
-				            session.setAttribute("notification", "Error: Student could not be deleted.");
-				            session.setAttribute("successStatus", "error");
+				        try {
+				            int id = Integer.parseInt(studentIdRaw);
+				            StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
+				            List<WorkentryDTO> entries = studentBean.getAllWorkentriesForStudent(id);
+				            request.setAttribute("workEntries", entries);
+				            address = "/WEB-INF/pages/student_workentries.jsp";
+				        } catch (NumberFormatException e) {
+				            request.setAttribute("error", "Invalid Student ID format.");
+				            address = "/WEB-INF/pages/students.jsp";
 				        }
 				    }
-				  //  response.sendRedirect("Controller?action=students");
-				   // return;
-				} 
-				else if (action.equals("updateStudent")) {
+				} else if (action.equals("studentEvaluations")) {
+					String studentIdRaw = request.getParameter("studentId");
+				    if (studentIdRaw == null) {
+				        address = "/WEB-INF/pages/students.jsp";
+				    } else {
+				        try {
+				            int id = Integer.parseInt(studentIdRaw);
+				            StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
+				            List<EvaluationDTO> evaluations = studentBean.getAllEvaluationsForStudent(id);
+				            request.setAttribute("evaluations", evaluations);
+				            address = "/WEB-INF/pages/student_evaluations.jsp";
+				        } catch (NumberFormatException e) {
+				            request.setAttribute("error", "Invalid Student ID format.");
+				            address = "/WEB-INF/pages/students.jsp";
+				        }
+				    }
+				} else if (action.equals("studentGrade")) {
+					if (request.getParameter("studentId") == null) {
+						address = "/WEB-INF/pages/students.jsp";
+					} else {
+						address = "/WEB-INF/pages/student_grade.jsp";
+					}
+				} else if (action.equals("addGrade")) {
+					address = "/WEB-INF/pages/student_grade.jsp";
+					GradeBean gradeBean = (GradeBean) session.getAttribute("gradeBean");
+					try {
+						Integer sId = Integer.parseInt(request.getParameter("studentId"));
+						Integer iId = Integer.parseInt(request.getParameter("internshipId"));
+						Integer val = Integer.parseInt(request.getParameter("gradeValue"));
+
+						GradeDTO dto = new GradeDTO();
+						dto.setStudentId(sId);
+						dto.setInternshipId(iId);
+						dto.setValue(val);
+						dto.setFacultyId(userBean.getUser().getId());
+
+						if (gradeBean.createGrade(dto)) {
+							session.setAttribute("notification", "Grade added successfully.");
+							session.setAttribute("successStatus", "success");
+						}
+					} catch (Exception e) {
+						session.setAttribute("notification", "Error adding grade.");
+					}
+					/*
+					 * address = "Controller?action=studentGrade&studentId=" +
+					 * request.getParameter("studentId"); response.sendRedirect(address); return;
+					 */
+				} else if (action.equals("deleteGrade")) {
+					address = "/WEB-INF/pages/student_grade.jsp";
+					GradeBean gradeBean = (GradeBean) session.getAttribute("gradeBean");
+					Integer gId = Integer.parseInt(request.getParameter("gradeId"));
+					if (gradeBean.deleteGrade(gId)) {
+						session.setAttribute("notification", "Grade deleted.");
+						session.setAttribute("successStatus", "success");
+					}
+					/*
+					 * address = "Controller?action=studentGrade&studentId=" +
+					 * request.getParameter("studentId"); response.sendRedirect(address); return;
+					 */
+				} else if (action.equals("studentsMonitoring")) {
+					address = "/WEB-INF/pages/student_monitoring.jsp";
+				} else if (action.equals("deleteStudent")) {
 					address = "/WEB-INF/pages/students.jsp";
+					StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
+					if (request.getParameter("studentId") != null && studentBean != null) {
+						Integer sId = Integer.parseInt(request.getParameter("studentId"));
+						if (studentBean.deleteStudent(sId)) {
+							session.setAttribute("notification", "Student successfully deleted.");
+							session.setAttribute("successStatus", "success");
+						} else {
+							session.setAttribute("notification", "Error: Student could not be deleted.");
+							session.setAttribute("successStatus", "error");
+						}
+					}
+					// response.sendRedirect("Controller?action=students");
+					// return;
+				} else if (action.equals("updateStudent")) {
+				    address = "/WEB-INF/pages/students.jsp"; 
+				    StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
+				    
+				    if (request.getParameter("studentId") != null && studentBean != null) {
+				        String sIdParam = request.getParameter("studentId");
+				        if (request.getParameter("submit") == null) {
+				            int id = Integer.parseInt(sIdParam);
+				            CreateStudentDTO s = studentBean.getCompleteStudentById(id);
+				            
+				            if (s != null) {
+				                request.setAttribute("studentToUpdate", s);
+				                request.setAttribute("currentStudentId", sIdParam);
+				                address = "/WEB-INF/pages/update_student.jsp";
+				            } else {
+				                session.setAttribute("notification", "Student not found.");
+				                session.setAttribute("successStatus", "error");
+				                address = "/WEB-INF/pages/students.jsp";
+				            }
+				        } 
+				        else {
+				            try {
+				                int id = Integer.parseInt(sIdParam);
+				                String firstName = request.getParameter("firstName");
+				                String lastName = request.getParameter("lastName");
+				                String indeks = request.getParameter("indeks");
+				                String email = request.getParameter("email");
+				                String password = request.getParameter("password");
+				                String username = request.getParameter("username");
+				                
+				                CreateStudentDTO updatedStudent = new CreateStudentDTO();
+				                updatedStudent.setFirstName(firstName);
+				                updatedStudent.setLastName(lastName);
+				                updatedStudent.setIndeks(indeks);
+				                updatedStudent.setEmail(email);
+				                updatedStudent.setPassword(password);
+				                updatedStudent.setUsername(username);
+
+				                if (studentBean.updateStudent(id, updatedStudent)) {
+				                    session.setAttribute("notification", "Student updated successfully.");
+				                    session.setAttribute("successStatus", "success");
+				                    address = "/WEB-INF/pages/students.jsp";
+				                } else {
+				                    session.setAttribute("notification", "Update failed.");
+				                    session.setAttribute("successStatus", "error");
+				                    address = "/WEB-INF/pages/students.jsp";
+				                }
+				            } catch (Exception e) {
+				                session.setAttribute("notification", "Error: " + e.getMessage());
+				                address = "/WEB-INF/pages/students.jsp";
+				            }
+				        }
+				    }
 				} else if (action.equals("createStudent")) {
 					address = "/WEB-INF/pages/create_student.jsp";
 					StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
-					if (request.getParameter("submit") != null && request.getParameter("firstName") != null && request.getParameter("lastName") != null
-							&& request.getParameter("indeks") != null && request.getParameter("email") != null
-							&& request.getParameter("usernameS") != null && request.getParameter("passwordS") != null) {
+					if (request.getParameter("submit") != null && request.getParameter("firstName") != null
+							&& request.getParameter("lastName") != null && request.getParameter("indeks") != null
+							&& request.getParameter("email") != null && request.getParameter("usernameS") != null
+							&& request.getParameter("passwordS") != null) {
 						try {
-							CreateStudentDTO student = new CreateStudentDTO(request.getParameter("firstName"), request.getParameter("lastName"),
-									request.getParameter("indeks"), request.getParameter("email"), userBean.getUser().getId(),
+							CreateStudentDTO student = new CreateStudentDTO(request.getParameter("firstName"),
+									request.getParameter("lastName"), request.getParameter("indeks"),
+									request.getParameter("email"), userBean.getUser().getId(),
 									request.getParameter("usernameS"), request.getParameter("passwordS"));
 							if (studentBean.createStudent(student)) {
-							//	address = "/WEB-INF/pages/students.jsp";
+								 address = "/WEB-INF/pages/students.jsp";
 								session.setAttribute("notification", "Student created.");
 								session.setAttribute("successStatus", "success");
-								response.sendRedirect("Controller?action=students");
-								return;
+								//response.sendRedirect("Controller?action=students");
+								//return;
 							}
 						} catch (Exception e) {
 							session.setAttribute("notification", "ERROR: " + e.getMessage());
 							session.setAttribute("successStatus", "error");
 						}
 					}
-				} 
+				}else if (action.equals("uploadStudentsCsv")) {
+				    address = "/WEB-INF/pages/students.jsp";
+				    StudentBean studentBean = (StudentBean) session.getAttribute("studentBean");
+				    try {
+				        Part filePart = request.getPart("file");
+				        InputStream fileStream = filePart.getInputStream();
+				        if(studentBean.uploadStudentsCsv(fileStream, userBean.getUser().getId())) {
+				            session.setAttribute("notification", "CSV uploaded successfully.");
+				            session.setAttribute("successStatus", "success");
+				        } else {
+				            session.setAttribute("notification", "CSV upload failed.");
+				            session.setAttribute("successStatus", "error");
+				        }
+				    } catch(Exception e) {
+				        session.setAttribute("notification", "Error uploading CSV.");
+				        session.setAttribute("successStatus", "error");
+				    }
+				}
 				else if (action.equals("createCompany")) {
 					address = "/WEB-INF/pages/create_company.jsp";
 					CompanyBean companyBean = (CompanyBean) session.getAttribute("companyBean");
@@ -152,8 +283,8 @@ public class Controller extends HttpServlet {
 								address = "/WEB-INF/pages/companies.jsp";
 								session.setAttribute("notification", "Company created.");
 								session.setAttribute("successStatus", "success");
-							//	response.sendRedirect("Controller?action=companies");
-							//	return;
+								// response.sendRedirect("Controller?action=companies");
+								// return;
 							}
 						} catch (Exception e) {
 							session.setAttribute("notification", "ERROR: " + e.getMessage());

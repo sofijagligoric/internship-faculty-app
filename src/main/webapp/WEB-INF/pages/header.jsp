@@ -14,8 +14,8 @@
 		<input type="checkbox" id="check"> <label for="check"
 			class="checkbtn"> &#9776; </label>
 		<ul class="menu">
-			<li><a href="?action=internships">Internships</a></li>
 			<li><a href="?action=companies">Companies</a></li>
+			<li><a href="?action=internships">Internships</a></li>
 			<li><a href="?action=students">Students</a></li>
 			<li><a href="?action=studentsMonitoring">Student monitoring</a></li>
 			<li><a href="?action=logout">Logout</a></li>
