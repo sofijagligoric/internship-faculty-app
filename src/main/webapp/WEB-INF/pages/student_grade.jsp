@@ -71,7 +71,7 @@
 							style="max-width: none; background-color: #c42a1f;">Delete</a> <% } else { %>
 							<button
 								onclick="openModal(<%= app.getInternshipId() %>, <%= studentId %>)"
-								 class="apply-btn" >Add Grade</button> <% } %>
+								 class="apply-btn" style="height: auto; min-height: 40px;" >Add Grade</button> <% } %>
 								</div>
 						</td>
 					</tr>

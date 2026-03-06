@@ -30,7 +30,7 @@
 		<div class="row-div create-comp-button-div">
 			<h2 class="title-h2">Student management</h2>
 			<div class="action-buttons" style="width: auto;">
-				<button onclick="openModal()" class="apply-btn">Load from
+				<button onclick="openModal()" class="apply-btn" style="background: #6b4a8c;">Load from
 					file</button>
 				<a href="?action=createStudent" class="pagination-link-enabled"
 					style="max-width: none;">New student</a>

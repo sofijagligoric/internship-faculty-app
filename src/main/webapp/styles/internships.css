@@ -109,7 +109,7 @@
 
 @media ( max-width : 768px) {
 	.main-internships-div {
-		padding: 15px;
+		padding: 20px;
 	}
 	.card-header {
 		flex-direction: column-reverse;

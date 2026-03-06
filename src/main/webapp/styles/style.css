@@ -212,6 +212,7 @@ td {
 th {
 	border: 1px solid #051642;
 	padding: 5px;
+	word-break: break-word;
 }
 
 tr:hover {
