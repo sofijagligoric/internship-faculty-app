@@ -14,6 +14,7 @@ public class InternshipDTO implements Serializable{
 	    private String name;
 	    private LocalDate startDate;
 	    private LocalDate endDate;
+	    private Boolean available;
 	    private String about;
 	    private String technologies;
 	    private String skills;
@@ -21,13 +22,14 @@ public class InternshipDTO implements Serializable{
 	    private String requirements;
 	    private String companyName;
     
-	public InternshipDTO(Integer id, String name, LocalDate startDate, LocalDate endDate, String about,
+	public InternshipDTO(Integer id, String name, LocalDate startDate, LocalDate endDate, Boolean available, String about,
 				String technologies, String skills, Integer companyId, String requirements, String companyName) {
 			super();
 			this.id = id;
 			this.name = name;
 			this.startDate = startDate;
 			this.endDate = endDate;
+			this.available = available;
 			this.about = about;
 			this.technologies = technologies;
 			this.skills = skills;
@@ -106,6 +108,17 @@ public class InternshipDTO implements Serializable{
 	public void setRequirements(String requirements) {
 		this.requirements = requirements;
 	}
+	
+	
+	
+	public Boolean getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(companyId, id, name);

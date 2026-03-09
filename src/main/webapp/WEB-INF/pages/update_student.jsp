@@ -14,7 +14,8 @@
 </head>
 <body>
     <%@include file="header.jsp"%>
-    <div class="main-new-company-div">
+    <div class="main-new-company-div column-div">
+    <a href="?action=students" class="back-arrow" style="margin: 15px 20px;"> &#8592; <span>Back</span></a>
     <% if (s != null) { %>
         <div class="new-company-card">
             <h2 class="new-comp-header">Update student: <%= s.getFirstName() %></h2>

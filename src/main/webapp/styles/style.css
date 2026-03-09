@@ -329,3 +329,29 @@ h1, h2, h3, h4, h5, h6 {
 		font-size: 14px;
 	}
 }
+
+
+.back-arrow {
+	display: none;
+	align-items: center;
+	text-decoration: none;
+	color: #555;
+	font-size: 16px;
+	margin-bottom: 20px;
+	transition: color 0.3s ease;
+	align-self: flex-start;
+}
+
+.back-arrow:hover {
+	color: #000;
+}
+
+.back-arrow span {
+	margin-left: 5px;
+}
+
+@media ( max-width : 770px) {
+	.back-arrow {
+		display: inline-flex;
+	}
+}

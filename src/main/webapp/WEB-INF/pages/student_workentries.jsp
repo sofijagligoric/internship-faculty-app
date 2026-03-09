@@ -19,6 +19,7 @@
 	<%@include file="header.jsp"%>
 
 	<div class="workentry-main column-div">
+	<a href="?action=studentsMonitoring" class="back-arrow"> &#8592; <span>Back</span></a>
 		<%
             List<WorkentryDTO> entries = (List<WorkentryDTO>) request.getAttribute("workEntries");
             

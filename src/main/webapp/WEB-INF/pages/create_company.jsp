@@ -14,7 +14,8 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-	<div class="main-new-company-div">
+	<div class="main-new-company-div column-div">
+	<a href="?action=companies" class="back-arrow" style="margin: 15px 20px;"> &#8592; <span>Back</span></a>
 		<%
 		if (session.getAttribute("notification") != null && !session.getAttribute("notification").toString().isEmpty()){
 		%>

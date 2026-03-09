@@ -30,8 +30,8 @@
 		<div class="row-div create-comp-button-div">
 			<h2 class="title-h2">Student management</h2>
 			<div class="action-buttons" style="width: auto;">
-				<button onclick="openModal()" class="apply-btn" style="background: #6b4a8c;">Load from
-					file</button>
+				<button onclick="openModal()" class="apply-btn"
+					style="background: #6b4a8c;">Load from file</button>
 				<a href="?action=createStudent" class="pagination-link-enabled"
 					style="max-width: none;">New student</a>
 			</div>
@@ -60,9 +60,13 @@
 						<td><%=s.getEmail()%></td>
 						<td>
 							<div class="action-buttons">
-								<a href="?action=updateStudent&studentId=<%=s.getId()%>"
-									class="pagination-link-enabled"
-									style="max-width: none; background-color: #327fba;">Update</a>
+
+								<form action="Controller" method="POST">
+									<input type="hidden" name="studentId" value="<%=s.getId()%>">
+									<button type="submit" name="action" value="updateStudent"
+										style="background-color: #327fba;"
+										class="apply-btn">Update</button>
+								</form>
 								<a href="?action=deleteStudent&studentId=<%=s.getId()%>"
 									class="pagination-link-enabled"
 									style="max-width: none; background-color: #c42a1f;"

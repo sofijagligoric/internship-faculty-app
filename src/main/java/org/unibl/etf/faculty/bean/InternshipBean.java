@@ -14,7 +14,7 @@ public class InternshipBean implements Serializable {
 	private static final long serialVersionUID = -4360911112329452208L;
 
 	public List<InternshipDTO> getAllInternships() {
-		return BackendService.getList("/internship/available/all", InternshipDTO[].class);
+		return BackendService.getList("/internship/all", InternshipDTO[].class);
 	}
 	
 }

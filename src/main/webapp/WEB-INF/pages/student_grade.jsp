@@ -19,6 +19,7 @@
 	<%@include file="header.jsp"%>
 
 	<div class="main-grades-div">
+	<a href="?action=studentsMonitoring" class="back-arrow" > &#8592; <span>Back</span></a>
 	<%
 		if (session.getAttribute("notification") != null && !session.getAttribute("notification").toString().isEmpty()) {
 		%>

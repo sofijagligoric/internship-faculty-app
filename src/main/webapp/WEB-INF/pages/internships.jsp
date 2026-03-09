@@ -26,6 +26,10 @@
 			<div class="internship-card">
 				<div class="card-header">
 					<h3><%=internship.getName()%></h3>
+					<span
+						class="status <%=internship.getAvailable() ? "open" : "closed"%>">
+						<%=internship.getAvailable() ? "Available" : "Closed"%>
+					</span>
 				</div>
 
 				<div class="card-body">
